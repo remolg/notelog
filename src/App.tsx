@@ -1,21 +1,15 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Container } from "react-bootstrap";
-import { Route, Routes, Navigate } from "react-router-dom";
-import NewNote from "./assets/NewNote";
-function App() {
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import Notlugum from "./components/Notlugum"
+import CreateNote from "./components/CreateNote"
 
+function App() {
   return (
-    <Container className="my-4">
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<h1>Home</h1>} />
-        <Route path="/new" element={<NewNote />} />
-        <Route path="/:id">
-          <Route index element={<h1>Show</h1>} />
-          <Route path="edit" element={<h1>Edit</h1>} />
-        </Route>
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="/" element={<Notlugum />} />
+        <Route path="/createnote" element={<CreateNote />} />
       </Routes>
-    </Container>
+    </BrowserRouter>
   )
 }
 
