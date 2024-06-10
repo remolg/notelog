@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import SliderMenu from './SliderMenu';
 import { FaTrashCan } from 'react-icons/fa6';
+import SliderMenu from './SliderMenu';
 
 interface Note {
   id: string;
@@ -12,7 +12,7 @@ interface Note {
   isChecked: boolean;
 }
 
-const Notlugum: React.FC = () => {
+const ImportantNote: React.FC = () => {
   const [notes, setNotes] = useState<Note[]>([]);
 
   useEffect(() => {
@@ -36,13 +36,13 @@ const Notlugum: React.FC = () => {
     }
   };
 
-
-
   return (
     <>
       <div className='container mx-auto'>
         <div className="mb-40 mt-10 flex justify-between">
-          <h1 className='text-5xl font-sans font-bold'>Notlugum</h1>
+          <h1 className='text-5xl font-sans font-bold'>Önemi Notlar
+
+          </h1>
           <div className="space-x-4">
             <Link to="/createnote">
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -53,7 +53,7 @@ const Notlugum: React.FC = () => {
           </div>
         </div>
         <div className='flex gap-10 flex-wrap'>
-          {notes.map(note => (
+          {notes.filter(note => note.isChecked).map(note => (
             <div key={note.id} className={`max-w-sm w-full sm:w-80 h-96 rounded overflow-hidden shadow-lg hover:shadow-2xl duration-300 mb-4 relative ${note.isChecked ? "bg-blue-300" : ""}`}>
               <Link to={`/note/${note.id}`}>
                 <img className="w-full h-48 object-cover" src={note.imgSrc} alt={note.title} />
@@ -77,4 +77,5 @@ const Notlugum: React.FC = () => {
   );
 }
 
-export default Notlugum;
+export default ImportantNote
+  ;

@@ -3,6 +3,7 @@ import Notlugum from './components/Notlugum';
 import CreateNote from './components/CreateNote';
 import NoteDetail from './components/NoteDetail';
 import Trash from './components/Trash';
+import ImportantNote from './components/ImportantNote';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" element={<Notlugum />} />
         <Route path="/createnote" element={<CreateNote />} />
         <Route path="/note/:id" element={<NoteDetail />} />
+        <Route path="/importantnote" element={<ImportantNote />} />
         <Route path="/trash" element={<Trash />} />
       </Routes>
     </BrowserRouter>
