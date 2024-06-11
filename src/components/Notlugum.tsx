@@ -7,7 +7,7 @@ interface Note {
   id: string;
   title: string;
   content: string;
-  imgSrc: string;
+  imgSrc: boolean | string;
   date: string;
   isChecked: boolean;
 }
@@ -37,7 +37,6 @@ const Notlugum: React.FC = () => {
   };
 
 
-
   return (
     <>
       <div className='container mx-auto'>
@@ -54,20 +53,22 @@ const Notlugum: React.FC = () => {
         </div>
         <div className='flex gap-10 flex-wrap'>
           {notes.map(note => (
-            <div key={note.id} className={`max-w-sm w-full sm:w-80 h-96 rounded overflow-hidden shadow-lg hover:shadow-2xl duration-300 mb-4 relative ${note.isChecked ? "bg-blue-300" : ""}`}>
+            <div key={note.id} className={`max-w-sm w-full sm:w-[340px] h-[400px] rounded overflow-hidden shadow-lg hover:shadow-2xl duration-300 mb-4 relative ${note.isChecked ? "bg-blue-300" : ""}`}>
               <Link to={`/note/${note.id}`}>
-                <img className="w-full h-48 object-cover" src={note.imgSrc} alt={note.title} />
-                <div className="px-6 py-4 h-48 overflow-hidden">
-                  <div className='flex justify-between'>
+                {note.imgSrc && (
+                  <img className="w-full h-48 object-cover" src="https://v1.tailwindcss.com/img/card-top.jpg" alt={note.title} />
+                )}
+                <div className="px-6 py-4 h-48 ">
+                  <div>
+                    <div className='text-right'>{note.date}</div>
                     <div className="font-bold text-xl mb-2">{note.title}</div>
-                    <div>{note.date}</div>
                   </div>
                   <p className="text-gray-700 text-base">
-                    {note.content.length > 100 ? note.content.substring(0, 100) + "... devamını okumak için tıkla" : note.content}
+                    {note.imgSrc && note.content.length > 100 ? note.content.substring(0, 100) + "... devamını okumak için tıkla" : note.content.substring(0, 250)}
                   </p>
                 </div>
+                <FaTrashCan onClick={() => deleteNote(note.id)} className='absolute bottom-4 right-4 text-black hover:text-red-500 cursor-pointer duration-300' />
               </Link>
-              <FaTrashCan onClick={() => deleteNote(note.id)} className='absolute bottom-4 right-4 text-black hover:text-red-500 cursor-pointer duration-300' />
             </div>
           ))}
         </div>

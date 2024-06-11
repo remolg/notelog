@@ -6,8 +6,8 @@ interface Note {
   id: string;
   title: string;
   content: string;
-  imgSrc: string;
   date: string;
+  imgSrc: boolean | string;
   isChecked: boolean;
 }
 const formatDate = (date: Date): string => {
@@ -18,21 +18,24 @@ const formatDate = (date: Date): string => {
 };
 
 const CreateNote: React.FC = () => {
-  const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
   const [isChecked, setIsChecked] = useState(false);
+  const [imgSrc, setImgSrc] = useState(false)
   const navigate = useNavigate();
 
+  const handleImageAdd = () => {
+    setImgSrc(!imgSrc);
+  };
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
 
+  const [title, setTitle] = useState<string>('');
+
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
-    if (inputValue.length <= 50) {
-      setTitle(inputValue);
-    }
+    setTitle(inputValue);
   };
 
   const handleContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -43,13 +46,14 @@ const CreateNote: React.FC = () => {
     e.preventDefault();
     const currentDate = new Date();
     const formattedDate = formatDate(currentDate);
+
     const newNote: Note = {
       id: uuidv4(),
       title,
       content,
       isChecked,
       date: formattedDate,
-      imgSrc: "https://v1.tailwindcss.com/img/card-top.jpg"
+      imgSrc
     };
 
     const savedNotes = localStorage.getItem('notes');
@@ -73,7 +77,7 @@ const CreateNote: React.FC = () => {
           onChange={handleTitleChange}
           required
           className="block w-2/3 mt-4 flex-1 border py-2 pl-1 text-sm text-gray-900 sm:text-base"
-          maxLength={40}
+          maxLength={24}
         />
       </div>
       <div className='mt-10'>
@@ -99,6 +103,15 @@ const CreateNote: React.FC = () => {
             <div className="text-sm leading-6">
               <label htmlFor="comments" className="font-medium text-gray-900">Önemli</label>
               <p className="text-gray-500">Eğer notunuz renkli bir şekilde gözükmesini isterseniz işaretleyin</p>
+            </div>
+          </div>
+          <div className="relative flex gap-x-3">
+            <div className="flex h-6 items-center">
+              <input onChange={handleImageAdd} id="comments" name="comments" type="checkbox" className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
+            </div>
+            <div className="text-sm leading-6">
+              <label htmlFor="comments" className="font-medium text-gray-900">Görsel Koy</label>
+              <p className="text-gray-500">Eğer notunuzda görsel olmasını istiyorsaniz işaretleyin</p>
             </div>
           </div>
         </div>
